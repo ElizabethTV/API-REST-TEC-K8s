@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apitec-app
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: apitec
+  template:
+    metadata:
+      labels:
+        app: apitec
+    spec:
+      containers:
+      - name: apitec-app
+        image: elizabeth00/api-rest-itl:latest
+        ports:
+        - containerPort: 3000
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: apitec-app-service
+spec:
+  selector:
+    app: apitec
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: NodePort
